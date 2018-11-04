@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,7 +20,7 @@
                         </connections>
                     </window>
                     <connections>
-                        <segue destination="K7o-qN-T9e" kind="relationship" relationship="window.shadowedContentViewController" id="ilK-wy-XDq"/>
+                        <segue destination="i31-Is-SJO" kind="relationship" relationship="window.shadowedContentViewController" id="tLo-7R-A6p"/>
                     </connections>
                 </windowController>
                 <customObject id="MN3-yk-KJt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -30,7 +30,7 @@
         <!--Edit View Controller-->
         <scene sceneID="LEm-46-qP4">
             <objects>
-                <viewController id="K7o-qN-T9e" customClass="EditViewController" customModule="XiEditor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Edit View Controller" id="K7o-qN-T9e" customClass="EditViewController" customModule="XiEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="3ye-5b-Ab2">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -97,7 +97,26 @@
                 </viewController>
                 <customObject id="ySa-Ve-cwL" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="425" y="-119"/>
+            <point key="canvasLocation" x="387" y="-775"/>
+        </scene>
+        <!--Xi Split View Controller-->
+        <scene sceneID="qHl-2P-pdo">
+            <objects>
+                <splitViewController id="i31-Is-SJO" customClass="XiSplitViewController" customModule="XiEditor" customModuleProvider="target" sceneMemberID="viewController">
+                    <splitView key="splitView" dividerStyle="thin" vertical="YES" id="EiI-yO-jP9">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <outlet property="delegate" destination="i31-Is-SJO" id="bfY-uG-hOr"/>
+                        </connections>
+                    </splitView>
+                    <connections>
+                        <outlet property="splitView" destination="EiI-yO-jP9" id="3tO-zM-ki9"/>
+                    </connections>
+                </splitViewController>
+                <customObject id="7Ft-Zi-SjZ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="319" y="-324"/>
         </scene>
         <!--User Input Prompt Controller-->
         <scene sceneID="eJE-Vi-nNd">
@@ -351,7 +370,7 @@ Gw
                 <customObject id="MxZ-GG-2K0" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="DVW-4U-qxz"/>
             </objects>
-            <point key="canvasLocation" x="1103.5" y="-171"/>
+            <point key="canvasLocation" x="921" y="332"/>
         </scene>
         <!--Suplementary Find View Controller-->
         <scene sceneID="U5d-nr-i4y">
@@ -474,7 +493,7 @@ Gw
                 <customObject id="TEY-bc-0Oc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController id="xgl-Q0-vom"/>
             </objects>
-            <point key="canvasLocation" x="956.5" y="167.5"/>
+            <point key="canvasLocation" x="219" y="408"/>
         </scene>
         <!--Application-->
         <scene sceneID="uLn-e8-8sb">
@@ -1056,6 +1075,17 @@ Gw
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="runToolbarCustomizationPalette:" target="7er-QZ-amI" id="JVY-tW-8hY"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="sWp-HS-fIL"/>
+                                        <menuItem title="Split Vertically" keyEquivalent="V" id="dpH-Y8-NfJ">
+                                            <connections>
+                                                <action selector="splitVertically:" target="7er-QZ-amI" id="8zC-mD-bpc"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Split Horizontally" keyEquivalent="H" id="U6p-Ko-oJd">
+                                            <connections>
+                                                <action selector="splitHorizontally:" target="7er-QZ-amI" id="liy-76-rvA"/>
                                             </connections>
                                         </menuItem>
                                     </items>

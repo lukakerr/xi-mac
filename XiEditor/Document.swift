@@ -76,9 +76,15 @@ class Document: NSDocument {
         windowController.window?.setFrame(newFrame, display: true)
         windowController.window?.minSize = Document.minWinSize
 
-        self.editViewController = windowController.contentViewController as? EditViewController
-        editViewController?.document = self
-        windowController.window?.delegate = editViewController
+        let splitViewController = windowController.contentViewController as? XiSplitViewController
+
+        let editViewController = storyboard.instantiateController(
+            withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "Edit View Controller")) as! EditViewController
+
+        self.editViewController = editViewController
+        editViewController.document = self
+
+        splitViewController?.addEditView(editViewController)
         self.addWindowController(windowController)
     }
 

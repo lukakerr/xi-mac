@@ -285,7 +285,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, XiClient {
             }
         }
     }
-    
+
     func languageChanged(viewIdentifier: String, languageIdentifier: String) {
         DispatchQueue.main.async { [weak self] in
             let document = self?.documentForViewIdentifier(viewIdentifier: viewIdentifier)
@@ -300,7 +300,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, XiClient {
             }
         }
     }
-    
+
     func availableLanguages(languages: [String]) {
         DispatchQueue.main.async { [weak self] in
             self?.orderedDocuments.forEach { document in

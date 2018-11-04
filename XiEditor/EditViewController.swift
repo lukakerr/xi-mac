@@ -100,6 +100,8 @@ class EditViewController: NSViewController, EditViewDataSource, FindDelegate, Sc
 
     var lines = LineCache<LineAssoc>()
 
+    var splitViewItem: NSSplitViewItem!
+
     var textMetrics: TextDrawingMetrics {
         return (NSApplication.shared.delegate as! AppDelegate).textMetrics
     }
@@ -134,7 +136,7 @@ class EditViewController: NSViewController, EditViewDataSource, FindDelegate, Sc
             updatePluginMenu()
         }
     }
-    
+
     /// Current language used for syntax highlighting
     var currentLanguage: String? {
         didSet {
@@ -536,6 +538,18 @@ class EditViewController: NSViewController, EditViewDataSource, FindDelegate, Sc
         }
     }
 
+    @IBAction func splitVertically(_ sender: NSMenuItem) {
+        let window = NSApplication.shared.keyWindow
+        let svc = window?.contentViewController as? XiSplitViewController
+        svc?.splitVertically(source: splitViewItem)
+    }
+
+    @IBAction func splitHorizontally(_ sender: NSMenuItem) {
+        let window = NSApplication.shared.keyWindow
+        let svc = window?.contentViewController as? XiSplitViewController
+        svc?.splitHorizontally(source: splitViewItem)
+    }
+
     //MARK: Other system events
     override func flagsChanged(with event: NSEvent) {
         if event.modifierFlags.contains(.option) {
@@ -683,7 +697,7 @@ class EditViewController: NSViewController, EditViewDataSource, FindDelegate, Sc
         let req = Events.SetTheme(themeName: sender.title)
         document.dispatcher.coreConnection.sendRpcAsync(req.method, params: req.params!)
     }
-    
+
     @IBAction func debugSetLanguage(_ sender: NSMenuItem) {
         guard sender.state != NSControl.StateValue.on else { print("language already active"); return }
 
@@ -793,10 +807,10 @@ class EditViewController: NSViewController, EditViewDataSource, FindDelegate, Sc
             }
         }
     }
-    
+
     func updateLanguageMenu() {
         let languageMenu = NSApplication.shared.mainMenu!.item(withTitle: "View")!.submenu!.item(withTitle: "Language");
-        
+
         for subItem in (languageMenu?.submenu!.items)! {
             if let currentLanguage = self.currentLanguage {
                 subItem.state = NSControl.StateValue(rawValue: (subItem.title == currentLanguage) ? 1 : 0)
@@ -813,7 +827,7 @@ class EditViewController: NSViewController, EditViewDataSource, FindDelegate, Sc
             .item(withTitle: "Multiple Search Queries")!
         item.state = findViewController.showMultipleSearchQueries ? .on : .off
     }
-    
+
     // Gets called when active window changes
     func updateMenuState() {
         updatePluginMenu()
@@ -873,22 +887,22 @@ class EditViewController: NSViewController, EditViewDataSource, FindDelegate, Sc
         }
         self.unifiedTitlebar = { self.unifiedTitlebar }()
     }
-    
+
     public func languageChanged(_ languageIdentifier: String) {
         self.currentLanguage = languageIdentifier
     }
-    
+
     public func availableLanguagesChanged(_ languages: [String]) {
         let languagesMenu = NSApplication.shared.mainMenu!.item(withTitle: "View")!.submenu!.item(withTitle: "Language")!.submenu!;
-        
+
         let currentlyActive = languagesMenu.items
             .filter { $0.state.rawValue == 1 }
             .first?.title
-        
+
         languagesMenu.removeAllItems()
         for language in languages {
             let item = NSMenuItem(title: language, action: #selector(EditViewController.debugSetLanguage(_:)),
-                keyEquivalent: "")
+                                  keyEquivalent: "")
             item.state = NSControl.StateValue(rawValue: (language == currentlyActive) ? 1 : 0)
             languagesMenu.addItem(item)
         }
